@@ -4,28 +4,34 @@ import SinglePage from "../pages/SinglePage";
 
 const HomePage = () => {
 
-    const [services, setServices] = useState([]);
+    const [products, setProducts] = useState([]);
 
-    const fetchServices = async () => {
-        const r = await fetch('https://exam.avavion.ru/api/services');
+    const fetchProducts = async () => {
+        const r = await fetch('https://api.avavion.ru/api/products');
 
         const data = await r.json();
 
-        setServices(data.data);
+        setProducts(data.data);
     }
     
 
+    const discountCount = (price, discount) => {
+        return Math.round(price - ((price * discount)/100));
+    }
+    
     useEffect(() => {
-        fetchServices();
+        fetchProducts();
     }, [])
 
     const [query, setQuery] = useState("");
 
-    const filteredServices = services.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+    const filteredProducts = products.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
 
     const onChangeQuery = (event) => {
         setQuery(event.target.value);
     }
+
+    
 
   return (
     <div className="container">
@@ -45,17 +51,20 @@ const HomePage = () => {
                 <div className="services">
 
                     {
-                        filteredServices.length ?
+                        filteredProducts.length ?
                             (
-                                filteredServices.map((service) => {
+                                filteredProducts.map((product) => {
                                     return (
-                                        <div className="service" key={service.id}>
-                                            <img src={service.image_url} alt="" />
-                                            <h2>{service.name}</h2>
-                                            <h3>{service.price} руб.</h3>
-                                            <p>{service.content}</p>
+                                        <div className="service" key={product.id}>
+                                            
+                                            <img src={product.image_url} alt="" />
+                                            <h2>{product.name}</h2>
+                                            
+                                            <h3>{product.price} руб. {discountCount([product.item])}</h3>
+                                                
+                                            <p>{product.short_text}</p>
 
-                                            <NavLink to={`/services/${service.id}`}><div className='button'>перейти</div></NavLink>
+                                            <NavLink to={`/products/${product.id}`}><div className='button'>перейти</div></NavLink>
                                         </div>
                                     );
                                 })

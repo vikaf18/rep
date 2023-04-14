@@ -6,24 +6,23 @@ const SinglePage = () => {
 
     const params = useParams();
 
-    const [service, setService] = useState({});
-
-    // console.log(params);
+    const [product, setProduct] = useState({});
 
     useEffect(() => {
-        fetch(`https://exam.avavion.ru/api/services/${params.id}`)
+        fetch(`https://api.avavion.ru/api/products/${params.id}`)
             .then((r) => r.json())
-            .then((data) => setService(data.data));
+            .then((data) => setProduct(data.data));
     }, []);
 
   return (
     
       <div class="container">
         <div class="wrapper">
-          <div key={service.id} className='singlepage'>
-              <img src={service.image_url} alt="" />
-              <h2>{service.name}</h2>
-              <p>{service.content}</p>
+          <div key={product.id} className='singlepage'>
+              <img src={product.image_url} alt="" />
+              <h2>{product.name}</h2>
+              <p>{product.text}</p>
+              <p>{product.price} руб.</p>
 
               <NavLink to={`/`}><div className='button'>назад</div></NavLink>
           </div>

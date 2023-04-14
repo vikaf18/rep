@@ -5,7 +5,7 @@ import Root from "../pages/Root";
 // Pages
 import HomePage from "../pages/HomePage";
 import SinglePage from "../pages/SinglePage";
-import RequestPage from "../pages/RequestPage";
+import ApplicationPage from "../pages/ApplicationPage";
 
 const router = createBrowserRouter([
     {
@@ -18,12 +18,12 @@ const router = createBrowserRouter([
                 index: true
             },
             {
-                path: 'services/:id',
+                path: 'products/:id',
                 element: <SinglePage />
             },
             {
-                path: '/request',
-                element: <RequestPage />
+                path: '/applications/:id',
+                element: <ApplicationPage />
             }
         ]
     }
